@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://JustTryItNow.github.io/about/</loc>
+    <lastmod>2019-09-19T22:47:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://JustTryItNow.github.io/</loc>
+    <lastmod>2019-09-19T22:47:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://JustTryItNow.github.io/categories/</loc>
+    <lastmod>2019-09-19T01:24:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://JustTryItNow.github.io/post/helloworld/</loc>
     <lastmod>2019-09-19T01:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -16,20 +37,22 @@
   </url>
   
   <url>
-    <loc>http://JustTryItNow.github.io/</loc>
+    <loc>http://JustTryItNow.github.io/categories/pytorch/</loc>
     <lastmod>2019-09-19T01:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://JustTryItNow.github.io/categories/</loc>
+    <loc>http://JustTryItNow.github.io/tags/</loc>
+    <lastmod>2019-09-19T01:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://JustTryItNow.github.io/tags/</loc>
+    <loc>http://JustTryItNow.github.io/tags/test/</loc>
+    <lastmod>2019-09-19T01:24:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
