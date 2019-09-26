@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://JustTryItNow.github.io/sitemap.xml
+Sitemap: https://JustTryItNow.github.io/sitemap.xml
