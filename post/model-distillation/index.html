@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Model Distillation - Zhou Zaida</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="zhouzaida" /><meta name="description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
+
+
+<link rel="canonical" href="https://JustTryItNow.github.io/post/model-distillation/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.ae7674a0.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Model Distillation" />
+<meta property="og:description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JustTryItNow.github.io/post/model-distillation/" />
+<meta property="article:published_time" content="2019-10-12T22:25:40+08:00" />
+<meta property="article:modified_time" content="2019-10-12T22:25:40+08:00" />
+<meta itemprop="name" content="Model Distillation">
+<meta itemprop="description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不">
+
+
+<meta itemprop="datePublished" content="2019-10-12T22:25:40&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-12T22:25:40&#43;08:00" />
+<meta itemprop="wordCount" content="1097">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Model Distillation"/>
+<meta name="twitter:description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhou Zaida</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zhou Zaida</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Model Distillation</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-10-12 </span>
+        <div class="post-category">
+            <a href="/categories/cv/"> cv </a>
+            </div>
+          <span class="more-meta"> 1097 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#模型蒸馏">模型蒸馏</a>
+<ul>
+<li><a href="#为什么会出现模型蒸馏">为什么会出现模型蒸馏？</a></li>
+<li><a href="#do-deep-nets-really-need-to-be-deep-2014">Do Deep Nets Really Need to be Deep?(2014)</a></li>
+<li><a href="#distilling-the-knowledge-in-a-neural-network-2015">Distilling the Knowledge in a Neural Network(2015)</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="模型蒸馏">模型蒸馏</h1>
+
+<h2 id="为什么会出现模型蒸馏">为什么会出现模型蒸馏？</h2>
+
+<p>大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，直接训练小模型，其性能又比大模型低不少，于是模型压缩应运而生。模型压缩包含模型剪枝、参数量化、模型蒸馏等</p>
+
+<h2 id="do-deep-nets-really-need-to-be-deep-2014">Do Deep Nets Really Need to be Deep?(2014)</h2>
+
+<ul>
+<li>深层网络真的需要很深吗？<br />
+未必，参数一样的深层网络和浅层网络，如果都是从头开始训练，深层网络的性能通常比浅层网络好，但这并不是说浅层网络的性能永远比深层网络差，通过训练好的深层网络带着浅层网络训练，最终性能是差不多的</li>
+<li>那训练好的深层网络是怎样带着浅层网络训练的呢？<br />
+浅层网络不使用target label作为训练目标，而是使用深层网络生成的logit作为训练目标，即让浅层网络模仿深层网络的行为</li>
+<li>那为什么不用prediction(softmax之后)而用logit(softmax之前)呢？
+
+<ul>
+<li>logit含有更丰富的信息</li>
+<li>不同的logit有可能产生同样的prediction，如果使用prediction，则使得student不很好地学习teacher给出的两者之间的差别</li>
+</ul></li>
+</ul>
+
+<h2 id="distilling-the-knowledge-in-a-neural-network-2015">Distilling the Knowledge in a Neural Network(2015)</h2>
+
+<ul>
+<li>知识（knowledge）是什么，蒸馏（distill）又是什么？<br />
+知识是指输入到输出的映射关系。蒸馏是把大模型的知识迁移（transfer）到小模型上</li>
+<li>那小模型可以从大模型那里学到什么？<br />
+可以学习泛化能力，即学习大模型如何合理地预测一个目标</li>
+<li>hard label和soft label那个更好？<br />
+
+<ul>
+<li>hard label：训练数据的true label，即one-hot label</li>
+<li>soft label：  大模型输出的prediction</li>
+<li>soft label相对于hard label具有更丰富的信息，即熵（entropy）更高，从更本质的角度讲，soft
+label是大模型直接输出的，有泛化能力的体现，更能反映不同类之间的内在联系。例如是猫狗分类问题，给一张训练图片，里面有一只猫，hard label表示只有猫，而soft label表示这只猫挺像狗的</li>
+</ul></li>
+<li>那soft label还有其他优点吗？<br />
+
+<ul>
+<li>当soft label具有较高的熵时，会使得训练数据之间的梯度的方差更小，所以能使用更少的数据训练小模型和更大的学习率</li>
+<li>因为大模型会生成label，所以小模型可以在未标注的数据上训练</li>
+</ul></li>
+<li>那logit直接经过softmax生成的soft label，信息足够了吗？那该怎么解决？<br />
+往往是不够的，因为大模型输出的正确类别仍然会有很大的置信度（即概率），这导致引入soft label的初衷打了折扣。为了使得soft label的概率更平缓，引入了温度系数T，更高的T会使得soft label更平缓</li>
+<li>hard label和soft label一起使用会更好</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">zhouzaida</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-10-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="justrunordoit@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/JustTryItNow" class="iconfont icon-github" title="github"></a>
+  <a href="https://JustTryItNow.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">zhouzaida</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
