@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Model Distillation - Zhou Zaida</title>
+  <title>模型蒸馏 - Zhou Zaida</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="zhouzaida" /><meta name="description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="zhouzaida" /><meta name="description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Model Distillation" />
-<meta property="og:description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不" />
+<meta property="og:title" content="模型蒸馏" />
+<meta property="og:description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://JustTryItNow.github.io/post/model-distillation/" />
 <meta property="article:published_time" content="2019-10-12T22:25:40+08:00" />
 <meta property="article:modified_time" content="2019-10-12T22:25:40+08:00" />
-<meta itemprop="name" content="Model Distillation">
-<meta itemprop="description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不">
+<meta itemprop="name" content="模型蒸馏">
+<meta itemprop="description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的">
 
 
 <meta itemprop="datePublished" content="2019-10-12T22:25:40&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-12T22:25:40&#43;08:00" />
-<meta itemprop="wordCount" content="1097">
+<meta itemprop="wordCount" content="1093">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Model Distillation"/>
-<meta name="twitter:description" content="模型蒸馏 为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不"/>
+<meta name="twitter:title" content="模型蒸馏"/>
+<meta name="twitter:description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -124,14 +124,14 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Model Distillation</h1>
+      <h1 class="post-title">模型蒸馏</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-10-12 </span>
         <div class="post-category">
             <a href="/categories/cv/"> cv </a>
             </div>
-          <span class="more-meta"> 1097 words </span>
+          <span class="more-meta"> 1093 words </span>
           <span class="more-meta"> 3 mins read </span>
         
       </div>
@@ -142,7 +142,7 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#模型蒸馏">模型蒸馏</a>
+<li>
 <ul>
 <li><a href="#为什么会出现模型蒸馏">为什么会出现模型蒸馏？</a></li>
 <li><a href="#do-deep-nets-really-need-to-be-deep-2014">Do Deep Nets Really Need to be Deep?(2014)</a></li>
@@ -154,8 +154,6 @@
 </div>
     <div class="post-content">
       
-
-<h1 id="模型蒸馏">模型蒸馏</h1>
 
 <h2 id="为什么会出现模型蒸馏">为什么会出现模型蒸馏？</h2>
 
