@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="zhouzaida" /><meta name="description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="zhouzaida" /><meta name="description" content="模型蒸馏的出现 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -39,25 +39,25 @@
 
 
 <meta property="og:title" content="模型蒸馏" />
-<meta property="og:description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的" />
+<meta property="og:description" content="模型蒸馏的出现 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://JustTryItNow.github.io/post/model-distillation/" />
 <meta property="article:published_time" content="2019-10-12T22:25:40+08:00" />
 <meta property="article:modified_time" content="2019-10-12T22:25:40+08:00" />
 <meta itemprop="name" content="模型蒸馏">
-<meta itemprop="description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的">
+<meta itemprop="description" content="模型蒸馏的出现 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，">
 
 
 <meta itemprop="datePublished" content="2019-10-12T22:25:40&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-12T22:25:40&#43;08:00" />
-<meta itemprop="wordCount" content="1093">
+<meta itemprop="wordCount" content="1089">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="模型蒸馏"/>
-<meta name="twitter:description" content="为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的"/>
+<meta name="twitter:description" content="模型蒸馏的出现 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -131,7 +131,7 @@
         <div class="post-category">
             <a href="/categories/cv/"> cv </a>
             </div>
-          <span class="more-meta"> 1093 words </span>
+          <span class="more-meta"> 1089 words </span>
           <span class="more-meta"> 3 mins read </span>
         
       </div>
@@ -144,7 +144,7 @@
 <ul>
 <li>
 <ul>
-<li><a href="#为什么会出现模型蒸馏">为什么会出现模型蒸馏？</a></li>
+<li><a href="#模型蒸馏的出现">模型蒸馏的出现</a></li>
 <li><a href="#do-deep-nets-really-need-to-be-deep-2014">Do Deep Nets Really Need to be Deep?(2014)</a></li>
 <li><a href="#distilling-the-knowledge-in-a-neural-network-2015">Distilling the Knowledge in a Neural Network(2015)</a></li>
 </ul></li>
@@ -155,7 +155,7 @@
     <div class="post-content">
       
 
-<h2 id="为什么会出现模型蒸馏">为什么会出现模型蒸馏？</h2>
+<h2 id="模型蒸馏的出现">模型蒸馏的出现</h2>
 
 <p>大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，直接训练小模型，其性能又比大模型低不少，于是模型压缩应运而生。模型压缩包含模型剪枝、参数量化、模型蒸馏等</p>
 
@@ -163,7 +163,7 @@
 
 <ul>
 <li>深层网络真的需要很深吗？<br />
-未必，参数一样的深层网络和浅层网络，如果都是从头开始训练，深层网络的性能通常比浅层网络好，但这并不是说浅层网络的性能永远比深层网络差，通过训练好的深层网络带着浅层网络训练，最终性能是差不多的</li>
+未必。参数一样的深层网络和浅层网络，如果都是从头开始训练，深层网络的性能通常比浅层网络好，但这并不是说浅层网络的性能永远比深层网络差，通过训练好的深层网络带着浅层网络训练，最终性能是差不多的</li>
 <li>那训练好的深层网络是怎样带着浅层网络训练的呢？<br />
 浅层网络不使用target label作为训练目标，而是使用深层网络生成的logit作为训练目标，即让浅层网络模仿深层网络的行为</li>
 <li>那为什么不用prediction(softmax之后)而用logit(softmax之前)呢？

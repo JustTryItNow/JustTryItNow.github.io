@@ -17,7 +17,7 @@
       <pubDate>Sat, 12 Oct 2019 22:25:40 +0800</pubDate>
       
       <guid>https://JustTryItNow.github.io/post/model-distillation/</guid>
-      <description>为什么会出现模型蒸馏？ 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的</description>
+      <description>模型蒸馏的出现 大模型的性能比小模型的好，但大模型参数过多，不仅导致内存消耗过大，还导致运行时间过长，而这在实际应用场景中是不可接受的。然而，</description>
     </item>
     
   </channel>
