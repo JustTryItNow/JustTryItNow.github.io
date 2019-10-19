@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-10-12T22:25:40&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-12T22:25:40&#43;08:00" />
-<meta itemprop="wordCount" content="1089">
+<meta itemprop="wordCount" content="2681">
 
 
 
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/cv/"> cv </a>
             </div>
-          <span class="more-meta"> 1089 words </span>
-          <span class="more-meta"> 3 mins read </span>
+          <span class="more-meta"> 2681 words </span>
+          <span class="more-meta"> 6 mins read </span>
         
       </div>
     </header>
@@ -147,6 +147,11 @@
 <li><a href="#模型蒸馏的出现">模型蒸馏的出现</a></li>
 <li><a href="#do-deep-nets-really-need-to-be-deep-2014">Do Deep Nets Really Need to be Deep?(2014)</a></li>
 <li><a href="#distilling-the-knowledge-in-a-neural-network-2015">Distilling the Knowledge in a Neural Network(2015)</a></li>
+<li><a href="#fitnets-hints-for-thin-deep-nets-2015">FITNETS: HINTS FOR THIN DEEP NETS(2015)</a></li>
+<li><a href="#paying-more-attention-to-attention-improving-the-performance-of-convolutional-neural-networks-via-attention-transfer-2017">Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer(2017)</a></li>
+<li><a href="#like-what-you-like-knowledge-distill-via-neuron-selectivity-transfer-2017">Like What You Like: Knowledge Distill via Neuron Selectivity Transfer(2017)</a></li>
+<li><a href="#knowledge-transfer-via-distillation-of-activation-boundaries-formed-by-hidden-neurons-2018">Knowledge Transfer via Distillation of Activation Boundaries Formed by Hidden Neurons(2018)</a></li>
+<li><a href="#on-the-efficacy-of-knowledge-distillation-2019">On the Efficacy of Knowledge Distillation(2019)</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -198,6 +203,75 @@ label是大模型直接输出的，有泛化能力的体现，更能反映不同
 <li>那logit直接经过softmax生成的soft label，信息足够了吗？那该怎么解决？<br />
 往往是不够的，因为大模型输出的正确类别仍然会有很大的置信度（即概率），这导致引入soft label的初衷打了折扣。为了使得soft label的概率更平缓，引入了温度系数T，更高的T会使得soft label更平缓</li>
 <li>hard label和soft label一起使用会更好</li>
+</ul>
+
+<h2 id="fitnets-hints-for-thin-deep-nets-2015">FITNETS: HINTS FOR THIN DEEP NETS(2015)</h2>
+
+<ul>
+<li>第三方源码：<a href="https://github.com/adri-romsor/FitNets">https://github.com/adri-romsor/FitNets</a></li>
+<li>网络深有什么用呢<br />
+深网络在高层能产生更抽象的特征，即特征表示更具不变性</li>
+<li>那网络深好训练吗<br />
+不好训练，因为更深的网络含有更多连续的非线性层，导致模型急剧非凸，所以不好优化</li>
+<li>如何利用深（depth）这个特性使模型更瘦和更深<br />
+利用teacher模型中间的特征来指导student的训练</li>
+</ul>
+
+<h2 id="paying-more-attention-to-attention-improving-the-performance-of-convolutional-neural-networks-via-attention-transfer-2017">Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer(2017)</h2>
+
+<ul>
+<li>官方源码：<a href="https://github.com/szagoruyko/attention-transfer">https://github.com/szagoruyko/attention-transfer</a></li>
+<li>在蒸馏框架中引入了注意力机制，并提出了activation-based和gradient-based的蒸馏方法</li>
+<li>在蒸馏框架中，注意力机制是怎么发挥作用的？<br />
+teacher指导student该关注哪些区域</li>
+<li>activation-based的提出<br />
+关注spatial信息，spatial pixel的激活值越大，那这个pixel越值得注意</li>
+<li>gradient-based的提出<br />
+从另一个角度思考注意力信息，如果一个像素上的微小改动而造成输出结果的很大变化，这种变化直接反映到梯度的数值上，那么可以说该像素是敏感的，换句话说，这个像素是值得注意的</li>
+</ul>
+
+<h2 id="like-what-you-like-knowledge-distill-via-neuron-selectivity-transfer-2017">Like What You Like: Knowledge Distill via Neuron Selectivity Transfer(2017)</h2>
+
+<ul>
+<li>提出了对齐student和teacher的中间层的分布</li>
+<li>如何衡量两个分布的距离<br />
+使用Maximun Mean Discrepancy(MMD)</li>
+</ul>
+
+<h2 id="knowledge-transfer-via-distillation-of-activation-boundaries-formed-by-hidden-neurons-2018">Knowledge Transfer via Distillation of Activation Boundaries Formed by Hidden Neurons(2018)</h2>
+
+<ul>
+<li>官方源码：<a href="https://github.com/bhheo/AB_distillation">https://github.com/bhheo/AB_distillation</a></li>
+<li>提出了蒸馏teacher激活边界的方法以及activation transfer loss</li>
+<li>为什么蒸馏激活边界会有用<br />
+有实验证明，神经网络的决策边界是由神经元的激活边界组合而成的</li>
+<li>有两种学习策略
+
+<ul>
+<li>直接把transfer loss和cross entropy loss组合在一起训练student</li>
+<li>先用transfer loss初始化student网络，再用cross entropy loss训练student</li>
+<li>为了单独分析transfer loss的影响，作者选用了后者</li>
+</ul></li>
+<li>在transfer神经元的响应(neural repsonse)时，activation transfer loss为什么会比mean square error更有效<br />
+mean square error偏向于student和teacher之间差异比较大的神经元响应，而不能很好地区分weak response和zero response，而这两者之间的差距正是网络分类正确与否的关键。相反地，activation transfer采用了阶跃函数，weak response和strong response都变成了1，即放大了weak response。虽然strong response的transfer被削弱了，但此时activation boundaries却能被准确地transfer。由于activation transfer loss有离散的阶跃函数，故不可导，于是作者使用了其他的等价形式作为loss</li>
+<li>如果student和teacher的dimension不同，那要怎么处理<br />
+作者是使用全连接层(先把特征reshape成向量，再接上全连接层)。当然，在图像任务上，则可以使用1×1卷积</li>
+<li>那为什么student可以通过一个连接层再和teacher进行计算<br />
+基于这样的思想：如果student的特征通过简单的转化就可以表示teacher的特征，那说明student和teacher是在同一个level的(即表达能力是接近的)</li>
+</ul>
+
+<h2 id="on-the-efficacy-of-knowledge-distillation-2019">On the Efficacy of Knowledge Distillation(2019)</h2>
+
+<ul>
+<li>teacher越好，训练出来的student越好吗<br />
+不一定，teacher的能力过强，导致student预测的概率分布很难与teacher的相似，即KL散度过大</li>
+<li>那该如何解决teacher和student能力不匹配的问题呢
+
+<ul>
+<li>teacher和student的capacity不要相差过大</li>
+<li>teacher只训练一定的(少于原来的)epoch</li>
+<li>teacher训练student的时候可以early stopping</li>
+</ul></li>
 </ul>
 
     </div>
