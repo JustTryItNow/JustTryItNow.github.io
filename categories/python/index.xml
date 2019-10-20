@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Zhou Zaida</title>
+    <link>https://JustTryItNow.github.io/categories/python/</link>
+    <description>Recent content in Python on Zhou Zaida</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Oct 2019 22:28:08 +0800</lastBuildDate>
+    
+	<atom:link href="https://JustTryItNow.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>元类</title>
+      <link>https://JustTryItNow.github.io/post/metaclass/</link>
+      <pubDate>Sun, 20 Oct 2019 22:28:08 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/metaclass/</guid>
+      <description>深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4</description>
+    </item>
+    
+  </channel>
+</rss>

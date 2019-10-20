@@ -3,27 +3,41 @@
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/</loc>
-    <lastmod>2019-10-12T22:25:40+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JustTryItNow.github.io/categories/cv/</loc>
-    <lastmod>2019-10-12T22:25:40+08:00</lastmod>
+    <lastmod>2019-10-20T22:28:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/post/</loc>
-    <lastmod>2019-10-12T22:25:40+08:00</lastmod>
+    <lastmod>2019-10-20T22:28:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/categories/python/</loc>
+    <lastmod>2019-10-20T22:28:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/</loc>
+    <lastmod>2019-10-20T22:28:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/post/metaclass/</loc>
+    <lastmod>2019-10-20T22:28:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/categories/cv/</loc>
     <lastmod>2019-10-12T22:25:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

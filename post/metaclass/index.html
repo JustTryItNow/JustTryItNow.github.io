@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>元类 - Zhou Zaida</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="zhouzaida" /><meta name="description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
+
+
+<link rel="canonical" href="https://JustTryItNow.github.io/post/metaclass/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.ae7674a0.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="元类" />
+<meta property="og:description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JustTryItNow.github.io/post/metaclass/" />
+<meta property="article:published_time" content="2019-10-20T22:28:08+08:00" />
+<meta property="article:modified_time" content="2019-10-20T22:28:08+08:00" />
+<meta itemprop="name" content="元类">
+<meta itemprop="description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4">
+
+
+<meta itemprop="datePublished" content="2019-10-20T22:28:08&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-20T22:28:08&#43;08:00" />
+<meta itemprop="wordCount" content="2173">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="元类"/>
+<meta name="twitter:description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhou Zaida</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zhou Zaida</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">元类</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-10-20 </span>
+        <div class="post-category">
+            <a href="/categories/python/"> Python </a>
+            </div>
+          <span class="more-meta"> 2173 words </span>
+          <span class="more-meta"> 5 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#深入理解python3元类">深入理解Python3元类</a>
+<ul>
+<li><a href="#类">类</a></li>
+<li><a href="#使用type动态创建类">使用type动态创建类</a></li>
+<li><a href="#元类">元类</a>
+<ul>
+<li><a href="#定制元类">定制元类</a></li>
+<li><a href="#元类的查找顺序">元类的查找顺序</a></li>
+<li><a href="#元类的作用">元类的作用</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="深入理解python3元类">深入理解Python3元类</h1>
+
+<h2 id="类">类</h2>
+
+<p>在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">ObjectCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">my_object</span> <span class="o">=</span> <span class="n">ObjectCreator</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+<span class="c1"># &lt;__main__.ObjectCreator at 0x7f4b78437550&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>ObjectCreator</code>类生成了<code>my_object</code>对象，但在Python中，一切皆对象，即<code>ObjectCreator</code>也是对象</p>
+
+<p>一旦使用了关键字<code>class</code>，Python便会在内存中生成一个名为&rdquo;ObjectCreator&rdquo;的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class ObjectCreator(object):
+    pass</pre></td></tr></table>
+</div>
+</div>
+<p><code>ObjectCreator</code>是一个类，所以它能够生成实例对像。而类也是对象，所以我们能够对<code>ObejctCreator</code>执行以下操作：
++ 把它赋给一个变量
++ 复制这个对象
++ 往对象里添加属性
++ 作为参数传递给函数</p>
+
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="c1"># 可以print一个类，因为类是对象</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">)</span> <span class="c1"># &lt;class &#39;__main__.ObjectCreator&#39;&gt;</span>
+
+<span class="c1"># 可以把类作为参数传递给函数</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">func</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">)</span>
+
+<span class="c1"># 可以往类里添加属性</span>
+<span class="n">ObjectCreator</span><span class="o">.</span><span class="n">new_attribute</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">,</span> <span class="s1">&#39;new_attribute&#39;</span><span class="p">))</span> <span class="c1"># True</span>
+
+<span class="c1"># 可以把类赋给一个变量</span>
+<span class="n">ObjectCreatorMirror</span> <span class="o">=</span> <span class="n">ObjectCreator</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ObjectCreatorMirror</span><span class="o">.</span><span class="n">new_attribute</span><span class="p">)</span><span class="c1"># foo</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ObjectCreatorMirror</span><span class="p">())</span> <span class="c1"># &lt;__main__.ObjectCreator object at 0x7f4b6a1e2c18&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="使用type动态创建类">使用type动态创建类</h2>
+
+<p>因为类是对象，所以我们可以像创建对象那样动态创建类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">choose_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">Foo</span> <span class="c1"># 返回类而不是实例</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">Bar</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="n">MyClass</span> <span class="o">=</span> <span class="n">choose_class</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span> <span class="c1"># &lt;class &#39;__main__.choose_class.&lt;locals&gt;.Foo&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>其实上面的代码算不上动态，因为我们还是自己用class定义了类。我们知道类也是对象，那么类必然也是由&rdquo;类的类&rdquo;生成的。<br />
+而这个&rdquo;类的类&rdquo;其实就是我们这篇文章的主题-元类。
+当我们使用class关键字定义类的时候，Python会自动创建这个类。当然，Python也给我们提供了手工创建类的手段。<br />
+还记得<code>type()</code>吗？我们可以调用这个函数知道查看对象的类型<br />
+例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span> <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">))</span> <span class="c1"># &lt;class &#39;type&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ObjectCreator</span><span class="p">()))</span> <span class="c1"># &lt;class &#39;__main__.ObjectCreator&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>除了查看对象的类型，<code>type()</code>还有另外一个功能，它能够动态创建类。如果我们想用<code>type()</code>创建类，我们需要传入3个参数，<br />
+下面是<code>type()</code>的函数签名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="nb">type</span><span class="p">(</span><span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">class</span><span class="p">,</span>
+     <span class="nb">tuple</span> <span class="n">of</span> <span class="n">the</span> <span class="n">parent</span> <span class="k">class</span> <span class="err">(</span><span class="nc">for</span> <span class="n">inheritance</span><span class="p">,</span> <span class="n">can</span> <span class="n">be</span> <span class="n">empty</span><span class="p">),</span>
+     <span class="n">dictionary</span> <span class="n">containing</span> <span class="n">attributes</span> <span class="n">names</span> <span class="ow">and</span> <span class="n">values</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>例如，如果我们想要定义一个类，我们可以像下面这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">MyShinyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们也可以使用<code>type()</code>达到同样的目的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="n">MyShinyClass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;MyShinyClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{})</span> <span class="c1"># 返回一个类对象</span>
+<span class="k">print</span><span class="p">(</span><span class="n">MyShinyClass</span><span class="p">)</span> <span class="c1"># &lt;class &#39;__main__.MyShinyClass&#39;&gt;</span>
+<span class="c1"># 创建一个实例</span>
+<span class="k">print</span><span class="p">(</span><span class="n">MyShinyClass</span><span class="p">())</span> <span class="c1"># &lt;__main__.MyShinyClass object at 0x7f4b6a2a94a8&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>type()</code>接受一个字典作为类的属性
+例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">class Foo(object):
+    bar = True</pre></td></tr></table>
+</div>
+</div>
+<p>同样的，用<code>type()</code>也可以做到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="n">Foo</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;Foo&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Foo</span><span class="p">)</span> <span class="c1"># &lt;class &#39;__main__.Foo&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Foo</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span> <span class="c1"># True</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span> <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># &lt;__main__.Foo object at 0x7f4b69fc5e48&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span> <span class="c1"># True</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类想继承其他的类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">FooChild</span><span class="p">(</span><span class="n">Foo</span><span class="p">):</span>
+    <span class="k">pass</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">FooChild = type(&#39;FooChild&#39;, (Foo,), {})
+print(FooChild)
+# &lt;class &#39;__main__.FooChild&#39;&gt;</pre></td></tr></table>
+</div>
+</div>
+<p>如何我们想定义一个方法，也很简单，只需要定义一个函数然后传进去就可以了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">echo_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>
+
+<span class="n">FooChild</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;FooChild&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">Foo</span><span class="p">,),</span> <span class="p">{</span><span class="s1">&#39;echo_bar&#39;</span><span class="p">:</span> <span class="n">echo_bar</span><span class="p">})</span>
+<span class="nb">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s1">&#39;echo_bar&#39;</span><span class="p">)</span> <span class="c1"># False</span>
+<span class="nb">hasattr</span><span class="p">(</span><span class="n">FooChild</span><span class="p">,</span> <span class="s1">&#39;echo_bar&#39;</span><span class="p">)</span> <span class="c1"># True</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>当然，也可以在类创建之后添加更多的方法，就像往类对象里添加方法一样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">echo_bar_more</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;yet another method&#39;</span><span class="p">)</span>
+<span class="n">FooChild</span><span class="o">.</span><span class="n">echo_bar_more</span> <span class="o">=</span> <span class="n">echo_bar_more</span>
+<span class="nb">hasattr</span><span class="p">(</span><span class="n">FooChild</span><span class="p">,</span> <span class="s1">&#39;echo_bar_more&#39;</span><span class="p">)</span> <span class="c1"># True</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="元类">元类</h2>
+
+<p>前面已经看到，<code>type()</code>可以用于生成类，就像下面这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="n">MyClass</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;MyClass&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="p">{})</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>而<code>type()</code>之所以可以创建类，因为它事实上是一个元类。<code>type()</code>是Python用于生成所有类的元类。
+Python一切皆对象，整形是对象，字符串是对象，函数是对象，类也是对象。我们可以通过<code>__class__</code>
+属性查看其对应的类</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="n">age</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="k">print</span><span class="p">(</span><span class="n">age</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span> <span class="k">pass</span>
+<span class="k">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;function&#39;&gt;</span>
+<span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="k">pass</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Bar</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;__main__.Bar&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>那么，<strong>class</strong>的<strong>class</strong>会是什么呢</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">print</span><span class="p">(</span><span class="n">age</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;type&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;type&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;type&#39;&gt;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="c1"># &lt;class &#39;type&#39;&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以看到<code>int</code>、<code>str</code>、<code>function</code>对应的类都是type类</p>
+
+<h3 id="定制元类">定制元类</h3>
+
+<p>元类用于生成类对象，我们可以称其为类工厂。type是Python内置的元类，当然我们也可以定制自己的元类<br />
+使用元类的目的在于创建类时，可以动态地改变类<br />
+假设有一个这样的需求，我们想把类的属性都定义为大写那么，我们只要告诉元类，要把类的所有属性都转为大写即可
+元类可以是任意的可调用对象，不必须是一个类
+例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">UpperAttrMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+        <span class="c1"># 挑选不以__开头的属性并把其转为大写</span>
+        <span class="n">uppercase_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dct</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uppercase_attr</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="c1"># 使用type创建类</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">UpperAttrMetaclass</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clsname</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">uppercase_attr</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"> <span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">UpperAttrMetaclass</span><span class="p">):</span>
+
+    <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;bip&#39;</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">))</span> <span class="c1"># False</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="s1">&#39;BAR&#39;</span><span class="p">))</span> <span class="c1"># True</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="元类的查找顺序">元类的查找顺序</h3>
+
+<p>先看自己类有没有继承元类，没有的话往父类找，父类没有的话就使用默认的元类<code>type()</code></p>
+
+<h3 id="元类的作用">元类的作用</h3>
+
+<ul>
+<li>拦截类的创建</li>
+<li>修改类的定义</li>
+<li>返回修改后的类</li>
+</ul>
+
+<p>## 元类的应用
+ ### ORM实例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"> <span class="c1"># ORM: object relational mapping 对象-关系映射</span>
+<span class="c1"># 把关系数据库的一行映射为一个对象，也就是一个类对应一个表</span>
+
+<span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">column_type</span><span class="p">):</span> <span class="c1"># column_type: 列类型</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_type</span> <span class="o">=</span> <span class="n">column_type</span>
+        
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    
+
+<span class="k">class</span> <span class="nc">IntegerField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;bigint&#39;</span><span class="p">)</span>
+        
+        
+<span class="k">class</span> <span class="nc">StringField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;varchar(100)&#39;</span><span class="p">)</span>
+        
+        
+<span class="k">class</span> <span class="nc">ModelMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Model&#39;</span><span class="p">:</span> <span class="c1"># 如果是Model基类，则直接返回</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found model: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found mappings:{}==&gt;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+                <span class="n">mappings</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">mappings</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">attrs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;__mappings__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mappings</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;__table__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span> <span class="c1"># 表名</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+    
+    
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ModelMetaclass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    
+    <span class="c1"># 既可以通过d[k]，也可以通过d.k获取值</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Model object has no attrubute {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    
+    <span class="c1"># 允许动态设置key的值，不仅可以d[k]，还可以d.k</span>
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mappings__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;insert into {} ({}) values ({})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__table__</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;SQL:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sql</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;ARGS:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+        
+        
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"> <span class="c1"># 创建一个实例</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;hello@world&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+<span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Found model: User
+Found mappings:id==&gt;IntegerField:id
+Found mappings:name==&gt;StringField:username
+Found mappings:email==&gt;StringField:email
+Found mappings:password==&gt;StringField:password
+SQL:insert into User (id,username,email,password) values (?.?.?.?)
+ARGS:[123, &#39;hello&#39;, &#39;hello@world&#39;, &#39;hello&#39;]</pre></td></tr></table>
+</div>
+</div>
+<p>### 单例设计模式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">class</span> <span class="nc">SingletonMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="n">_instances</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">SingletonClass</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">SingletonMeta</span><span class="p">):</span>
+    <span class="k">pass</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>## 参考
+ + <a href="https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python/6581949#6581949">What are metaclasses in Python?</a>
+ + <a href="https://blog.csdn.net/m0_37519490/article/details/80825934">python3 metaclass&ndash;创建类的过程分析</a>
+ + <a href="https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/">Understanding Python metaclasses</a>
+ + <a href="https://www.datacamp.com/community/tutorials/python-metaclasses">Introduction to Python Metaclasses</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">zhouzaida</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-10-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/model-distillation/">
+            <span class="next-text nav-default">模型蒸馏</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="justrunordoit@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/JustTryItNow" class="iconfont icon-github" title="github"></a>
+  <a href="https://JustTryItNow.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">zhouzaida</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

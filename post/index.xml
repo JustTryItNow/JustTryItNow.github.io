@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 12 Oct 2019 22:25:40 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 20 Oct 2019 22:28:08 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>元类</title>
+      <link>https://JustTryItNow.github.io/post/metaclass/</link>
+      <pubDate>Sun, 20 Oct 2019 22:28:08 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/metaclass/</guid>
+      <description>深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4</description>
+    </item>
     
     <item>
       <title>模型蒸馏</title>
