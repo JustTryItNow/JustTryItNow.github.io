@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>元类 - Zhou Zaida</title>
+  <title>深入理解Python3元类 - Zhou Zaida</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="zhouzaida" /><meta name="description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="zhouzaida" /><meta name="description" content="类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 5 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &amp;lt;__main__.ObjectCreator at 0x7f4b78437550&amp;gt; O" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="元类" />
-<meta property="og:description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4" />
+<meta property="og:title" content="深入理解Python3元类" />
+<meta property="og:description" content="类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 5 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &lt;__main__.ObjectCreator at 0x7f4b78437550&gt; O" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://JustTryItNow.github.io/post/metaclass/" />
 <meta property="article:published_time" content="2019-10-20T22:28:08+08:00" />
 <meta property="article:modified_time" content="2019-10-20T22:28:08+08:00" />
-<meta itemprop="name" content="元类">
-<meta itemprop="description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4">
+<meta itemprop="name" content="深入理解Python3元类">
+<meta itemprop="description" content="类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 5 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &lt;__main__.ObjectCreator at 0x7f4b78437550&gt; O">
 
 
 <meta itemprop="datePublished" content="2019-10-20T22:28:08&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-20T22:28:08&#43;08:00" />
-<meta itemprop="wordCount" content="2173">
+<meta itemprop="wordCount" content="2160">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="元类"/>
-<meta name="twitter:description" content="深入理解Python3元类 类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4"/>
+<meta name="twitter:title" content="深入理解Python3元类"/>
+<meta name="twitter:description" content="类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 5 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &lt;__main__.ObjectCreator at 0x7f4b78437550&gt; O"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -124,14 +124,14 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">元类</h1>
+      <h1 class="post-title">深入理解Python3元类</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-10-20 </span>
         <div class="post-category">
             <a href="/categories/python/"> Python </a>
             </div>
-          <span class="more-meta"> 2173 words </span>
+          <span class="more-meta"> 2160 words </span>
           <span class="more-meta"> 5 mins read </span>
         
       </div>
@@ -142,7 +142,7 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#深入理解python3元类">深入理解Python3元类</a>
+<li>
 <ul>
 <li><a href="#类">类</a></li>
 <li><a href="#使用type动态创建类">使用type动态创建类</a></li>
@@ -159,8 +159,6 @@
 </div>
     <div class="post-content">
       
-
-<h1 id="深入理解python3元类">深入理解Python3元类</h1>
 
 <h2 id="类">类</h2>
 
