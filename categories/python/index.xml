@@ -17,7 +17,7 @@
       <pubDate>Sun, 20 Oct 2019 22:28:08 +0800</pubDate>
       
       <guid>https://JustTryItNow.github.io/post/metaclass/</guid>
-      <description>类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 5 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &amp;lt;__main__.ObjectCreator at 0x7f4b78437550&amp;gt; O</description>
+      <description>类 在介绍元类之前，我们先来聊一下类。在大多数语言中，类是用于生成对象的一段封装的代码，Python也是如此 1 2 3 4 class ObjectCreator(object): pass my_object = ObjectCreator() print(my_object) # &amp;lt;__main__.ObjectCreator at 0x7f4b78437550&amp;gt; Ob</description>
     </item>
     
   </channel>
