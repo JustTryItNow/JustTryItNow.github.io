@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-10-12T22:25:40&#43;08:00" />
 <meta itemprop="dateModified" content="2019-10-12T22:25:40&#43;08:00" />
-<meta itemprop="wordCount" content="2681">
+<meta itemprop="wordCount" content="3309">
 
 
 
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/cv/"> cv </a>
             </div>
-          <span class="more-meta"> 2681 words </span>
-          <span class="more-meta"> 6 mins read </span>
+          <span class="more-meta"> 3309 words </span>
+          <span class="more-meta"> 7 mins read </span>
         
       </div>
     </header>
@@ -150,6 +150,8 @@
 <li><a href="#fitnets-hints-for-thin-deep-nets-2015">FITNETS: HINTS FOR THIN DEEP NETS(2015)</a></li>
 <li><a href="#paying-more-attention-to-attention-improving-the-performance-of-convolutional-neural-networks-via-attention-transfer-2017">Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer(2017)</a></li>
 <li><a href="#like-what-you-like-knowledge-distill-via-neuron-selectivity-transfer-2017">Like What You Like: Knowledge Distill via Neuron Selectivity Transfer(2017)</a></li>
+<li><a href="#deep-mutual-learning-2017">Deep Mutual Learning(2017)</a></li>
+<li><a href="#training-deep-neural-networks-in-generations-a-more-tolerant-teacher-educates-better-students-2018">Training Deep Neural Networks in Generations: A More Tolerant Teacher Educates Better Students(2018)</a></li>
 <li><a href="#knowledge-transfer-via-distillation-of-activation-boundaries-formed-by-hidden-neurons-2018">Knowledge Transfer via Distillation of Activation Boundaries Formed by Hidden Neurons(2018)</a></li>
 <li><a href="#on-the-efficacy-of-knowledge-distillation-2019">On the Efficacy of Knowledge Distillation(2019)</a></li>
 </ul></li>
@@ -236,6 +238,29 @@ teacher指导student该关注哪些区域</li>
 <li>提出了对齐student和teacher的中间层的分布</li>
 <li>如何衡量两个分布的距离<br />
 使用Maximun Mean Discrepancy(MMD)</li>
+</ul>
+
+<h2 id="deep-mutual-learning-2017">Deep Mutual Learning(2017)</h2>
+
+<ul>
+<li>模型蒸馏是基于怎么样的一种观察<br />
+在特定任务中，小网络也许有和大网络同样的表达能力，之所以小网络的性能没大网络好，只是因为小网络比较难优化，于是就有了大网络带着小网络学习的模型蒸馏方法</li>
+<li>提出了一帮学生协同学习共同解决问题的方法<br /></li>
+<li>为什么一帮未训练的学生能协同学习且最终的性能会比较好<br />
+这样的协同策略能让学生学习到更广的最优值，而不是更好的最优值，更广的最优值意味着模型的泛化能力更强</li>
+</ul>
+
+<h2 id="training-deep-neural-networks-in-generations-a-more-tolerant-teacher-educates-better-students-2018">Training Deep Neural Networks in Generations: A More Tolerant Teacher Educates Better Students(2018)</h2>
+
+<ul>
+<li>In Generations指什么<br />
+In Generations的思路是先训练一个teacher(与student的结构一样)，然后再用这个teacher监督student，训练完后，这个student又成了下一阶段的teacher</li>
+<li>More Tolerant Teacher有什么用<br />
+More Tolerant Teacher虽然准确率没有strict teacher的高，但能提供更多类间相似性信息，能让student更容易去学习teacher所提供的类间相似性信息</li>
+<li>提出了secondary information的概念<br />
+即图片中的类别相似性信息，注意，这里的类别相似性信息与图片紧密相关，即不同的图片的类别相似性信息是不同的</li>
+<li>那如何产生合适的secondary information<br />
+目前有两种方法，一种是label smoothing regularization(LSR)，另一种是confidence penalty(CP)，但这两种方法会使得confidence score布满所有的类别而不理会这其中的一些类别是否真有类别相似性，于是作者提出了top score difference(TSD)</li>
 </ul>
 
 <h2 id="knowledge-transfer-via-distillation-of-activation-boundaries-formed-by-hidden-neurons-2018">Knowledge Transfer via Distillation of Activation Boundaries Formed by Hidden Neurons(2018)</h2>
