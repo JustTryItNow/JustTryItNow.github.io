@@ -6,10 +6,19 @@
     <description>Recent content on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Oct 2019 22:28:08 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 26 Nov 2019 20:01:18 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python Collections</title>
+      <link>https://JustTryItNow.github.io/post/python-collections/</link>
+      <pubDate>Tue, 26 Nov 2019 20:01:18 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/python-collections/</guid>
+      <description>1 Counter Counter是dict的子类，用于计数可哈希对象。Counter()接受可迭代对象作为输入，例如列表、元组，并返回Counter类型的</description>
+    </item>
     
     <item>
       <title>深入理解Python3元类</title>
