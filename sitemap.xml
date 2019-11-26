@@ -3,34 +3,41 @@
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/</loc>
-    <lastmod>2019-11-26T20:01:18+08:00</lastmod>
+    <lastmod>2019-11-26T20:06:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/post/</loc>
-    <lastmod>2019-11-26T20:01:18+08:00</lastmod>
+    <lastmod>2019-11-26T20:06:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/python/</loc>
-    <lastmod>2019-11-26T20:01:18+08:00</lastmod>
+    <lastmod>2019-11-26T20:06:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://JustTryItNow.github.io/post/python-collections/</loc>
-    <lastmod>2019-11-26T20:01:18+08:00</lastmod>
+    <loc>https://JustTryItNow.github.io/post/python-itertools/</loc>
+    <lastmod>2019-11-26T20:06:21+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/</loc>
+    <lastmod>2019-11-26T20:06:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/post/python-collections/</loc>
     <lastmod>2019-11-26T20:01:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

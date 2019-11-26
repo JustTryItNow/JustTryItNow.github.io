@@ -6,13 +6,22 @@
     <description>Recent content in python on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 26 Nov 2019 20:01:18 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 26 Nov 2019 20:06:21 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Python Collections</title>
+      <title>Python itertools--为高效循环而创建迭代器的函数</title>
+      <link>https://JustTryItNow.github.io/post/python-itertools/</link>
+      <pubDate>Tue, 26 Nov 2019 20:06:21 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/python-itertools/</guid>
+      <description>1 无穷迭代器 1.1 count() 均匀间隔产生值的迭代器 1 2 3 4 5 from itertools import count from itertools import islice result = count(start=1, step=2) print(list(islice(result, 0, 8, 1))) # [1, 3, 5, 7, 9, 11, 13, 15 1.2 cycle() 循环迭代可迭代对象 1 2 3 4 5 from itertools import cycle from</description>
+    </item>
+    
+    <item>
+      <title>Python collections--高性能容器数据类型</title>
       <link>https://JustTryItNow.github.io/post/python-collections/</link>
       <pubDate>Tue, 26 Nov 2019 20:01:18 +0800</pubDate>
       
