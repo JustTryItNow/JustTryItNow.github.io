@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-27T20:24:30&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-27T20:24:30&#43;08:00" />
-<meta itemprop="wordCount" content="641">
+<meta itemprop="wordCount" content="682">
 
 
 
@@ -131,7 +131,7 @@
         <div class="post-category">
             <a href="/categories/python/"> python </a>
             </div>
-          <span class="more-meta"> 641 words </span>
+          <span class="more-meta"> 682 words </span>
           <span class="more-meta"> 2 mins read </span>
         
       </div>
@@ -142,9 +142,20 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#修改a的值">修改a的值</a></li>
-<li><a href="#改变简单对象的值-copy-和deepcopy-所复制出来的对象的值不会发生改变">改变简单对象的值，copy()和deepcopy()所复制出来的对象的值不会发生改变</a></li>
-<li><a href="#改变复杂对象的值-例如改变列表中列表的值-此时copy-复制出来的对象的值会发生变化-而deepcopy-的不会发生变化-这是因为copy-复制出来的对象里面的列表或者字典并没有独立出来-而依然指向被复制的对象的相应列表或者字典">改变复杂对象的值，例如改变列表中列表的值，此时copy()复制出来的对象的值会发生变化，而deepcopy()的不会发生变化，这是因为copy()复制出来的对象里面的列表或者字典并没有独立出来，而依然指向被复制的对象的相应列表或者字典</a></li>
+<li>
+<ul>
+<li><a href="#1-deepcopy-深拷贝">1 deepcopy()深拷贝</a></li>
+<li><a href="#2-copy-浅拷贝">2 copy()浅拷贝</a>
+<ul>
+<li><a href="#2-1-浅拷贝的值是不可变对象-整数-浮点数-字符串-元组">2.1 浅拷贝的值是不可变对象（整数、浮点数、字符串、元组）</a></li>
+<li><a href="#2-2-浅拷贝的是可变对象-列表-字典">2.2 浅拷贝的是可变对象（列表、字典）</a>
+<ul>
+<li><a href="#2-2-1-可变对象是简单对象">2.2.1 可变对象是简单对象</a></li>
+<li><a href="#2-2-2-可变对象是复杂对象">2.2.2 可变对象是复杂对象</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#3-使用建议">3 使用建议</a></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -152,73 +163,121 @@
     <div class="post-content">
       
 
-<p>1 deepcopy()深拷贝</p>
+<h2 id="1-deepcopy-深拷贝">1 deepcopy()深拷贝</h2>
 
-<p>deepcopy()，会产生一个独立的对象，不互相影响
-2 copy()浅拷贝
-2.1 浅拷贝的值是不可变对象（整数、浮点数、字符串、元组）</p>
+<p>deepcopy()，会产生一个独立的对象，不互相影响</p>
+
+<h2 id="2-copy-浅拷贝">2 copy()浅拷贝</h2>
+
+<h3 id="2-1-浅拷贝的值是不可变对象-整数-浮点数-字符串-元组">2.1 浅拷贝的值是不可变对象（整数、浮点数、字符串、元组）</h3>
 
 <p>因为被拷贝的是不可变对象，即值不能被修改，所以copy()，deepcopy()，=的效果都是一样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">copy</span>
 
-<p>import copy</p>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&#34;hello world&#34;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>  <span class="c1"># 140302100891888, 140302100891888, 140302100891888, 140302100891888</span>
 
-<p>a = &ldquo;hello world&rdquo;
-b = a
-c = copy.copy(a)
-d = copy.deepcopy(a)
-print(id(a), id(b), id&copy;, id(d))  # 140302100891888, 140302100891888, 140302100891888, 140302100891888</p>
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>  <span class="c1"># 140301742710072, 140301742710072, 140301742710072, 140301742710072</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="2-2-浅拷贝的是可变对象-列表-字典">2.2 浅拷贝的是可变对象（列表、字典）</h3>
 
-<p>a = (1, 2, 3)
-b = a
-c = copy.copy(a)
-d = copy.deepcopy(a)
-print(id(a), id(b), id&copy;, id(d))  # 140301742710072, 140301742710072, 140301742710072, 140301742710072</p>
-
-<p>2.2 浅拷贝的是可变对象（列表、字典）
-2.2.1 可变对象是简单对象</p>
+<h4 id="2-2-1-可变对象是简单对象">2.2.1 可变对象是简单对象</h4>
 
 <p>简单对象即列表或者字典中不包含列表或者字典，此时copy() 和deepcopy()的效果一样，即产生一个新的对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">copy</span>
 
-<p>import copy</p>
-
-<p>a = [1, 2, 3]
-b = a
-c = copy.copy(a)
-d = copy.deepcopy(a)
-print(id(a), id(b), id&copy;, id(d))  # 140301742050696, 140301742050696, 140302092087816, 140301742085768</p>
-
-<h1 id="修改a的值">修改a的值</h1>
-
-<p>a.append(4)
-print(a, b, c, d)  # [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3], [1, 2, 3]</p>
-
-<p>2.2.2 可变对象是复杂对象</p>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>  <span class="c1"># 140301742050696, 140301742050696, 140302092087816, 140301742085768</span>
+<span class="c1"># 修改a的值</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3], [1, 2, 3]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="2-2-2-可变对象是复杂对象">2.2.2 可变对象是复杂对象</h4>
 
 <p>复杂对象即对象中包含列表或字典，此时copy() 和deepcopy()的效果不一样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">copy</span>
 
-<p>import copy</p>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>  <span class="c1"># 140301741900680, 140301741900680, 140301741901576, 140301729711880</span>
 
-<p>a = [[1, 2], 3, 4]
-b = a
-c = copy.copy(a)
-d = copy.deepcopy(a)
-print(id(a), id(b), id&copy;, id(d))  # 140301741900680, 140301741900680, 140301741901576, 140301729711880</p>
+<span class="c1"># 改变简单对象的值，copy()和deepcopy()所复制出来的对象的值不会发生改变</span>
+<span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 3 -&gt; 5</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># [[1, 2], 5, 4], [[1, 2], 5, 4], [[1, 2], 3, 4], [[1, 2], 3, 4]</span>
 
-<h1 id="改变简单对象的值-copy-和deepcopy-所复制出来的对象的值不会发生改变">改变简单对象的值，copy()和deepcopy()所复制出来的对象的值不会发生改变</h1>
+<span class="c1"># 改变复杂对象的值，例如改变列表中列表的值，此时copy()复制出来的对象的值会发生变化，而deepcopy()的不会发生变化，这是因为copy()复制出来的对象里面的列表或者字典并没有独立出来，而依然指向被复制的对象的相应列表或者字典</span>
+<span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>  <span class="c1"># [1, 2] -&gt; [1, 2, 6]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># [[1, 2, 6], 5, 4], [[1, 2, 6], 5, 4], [[1, 2, 6], 3, 4], [[1, 2], 3, 4]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-使用建议">3 使用建议</h2>
 
-<p>a[1] = 5  # 3 -&gt; 5
-print(a, b, c, d)  # [[1, 2], 5, 4], [[1, 2], 5, 4], [[1, 2], 3, 4], [[1, 2], 3, 4]</p>
-
-<h1 id="改变复杂对象的值-例如改变列表中列表的值-此时copy-复制出来的对象的值会发生变化-而deepcopy-的不会发生变化-这是因为copy-复制出来的对象里面的列表或者字典并没有独立出来-而依然指向被复制的对象的相应列表或者字典">改变复杂对象的值，例如改变列表中列表的值，此时copy()复制出来的对象的值会发生变化，而deepcopy()的不会发生变化，这是因为copy()复制出来的对象里面的列表或者字典并没有独立出来，而依然指向被复制的对象的相应列表或者字典</h1>
-
-<p>a[0].append(6)  # [1, 2] -&gt; [1, 2, 6]
-print(a, b, c, d)  # [[1, 2, 6], 5, 4], [[1, 2, 6], 5, 4], [[1, 2, 6], 3, 4], [[1, 2], 3, 4]</p>
-
-<p>3 使用建议</p>
-
-<p>如果想互相影响，用=赋值</p>
-
-<p>如果不想互相影响，用deepcopy()</p>
+<p>如果想互相影响，用=赋值
+如果不想互相影响，用deepcopy()</p>
 
     </div>
 
