@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 26 Nov 2019 20:06:21 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 27 Nov 2019 20:24:30 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python Copy</title>
+      <link>https://JustTryItNow.github.io/post/python-copy/</link>
+      <pubDate>Wed, 27 Nov 2019 20:24:30 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/python-copy/</guid>
+      <description>1 deepcopy()深拷贝 deepcopy()，会产生一个独立的对象，不互相影响 2 copy()浅拷贝 2.1 浅拷贝的值是不可变对象（整数、浮点数</description>
+    </item>
     
     <item>
       <title>Python itertools--为高效循环而创建迭代器的函数</title>
