@@ -3,34 +3,41 @@
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/</loc>
-    <lastmod>2019-11-27T20:24:30+08:00</lastmod>
+    <lastmod>2019-11-30T23:56:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/post/iterables-vs-iterator-vs-generators/</loc>
+    <lastmod>2019-11-30T23:56:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/post/</loc>
-    <lastmod>2019-11-27T20:24:30+08:00</lastmod>
+    <lastmod>2019-11-30T23:56:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/python/</loc>
-    <lastmod>2019-11-27T20:24:30+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JustTryItNow.github.io/post/python-copy/</loc>
-    <lastmod>2019-11-27T20:24:30+08:00</lastmod>
+    <lastmod>2019-11-30T23:56:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JustTryItNow.github.io/</loc>
+    <lastmod>2019-11-30T23:56:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/post/python-copy/</loc>
     <lastmod>2019-11-27T20:24:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

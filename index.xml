@@ -6,10 +6,19 @@
     <description>Recent content on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 27 Nov 2019 20:24:30 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 30 Nov 2019 23:56:25 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Iterables vs Iterator vs Generators</title>
+      <link>https://JustTryItNow.github.io/post/iterables-vs-iterator-vs-generators/</link>
+      <pubDate>Sat, 30 Nov 2019 23:56:25 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/iterables-vs-iterator-vs-generators/</guid>
+      <description>转载自https://nvie.com/posts/iterators-vs-generators/ Occasionally I&amp;rsquo;ve run into situations of confusion on the exact differences between the following related concepts in Python: a container</description>
+    </item>
     
     <item>
       <title>Python copy() VS deepcopy()</title>
