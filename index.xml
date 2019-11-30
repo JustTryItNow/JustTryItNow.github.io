@@ -6,10 +6,19 @@
     <description>Recent content on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 30 Nov 2019 23:56:25 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 01 Dec 2019 00:08:27 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>magicmethods</title>
+      <link>https://JustTryItNow.github.io/post/magicmethods/</link>
+      <pubDate>Sun, 01 Dec 2019 00:08:27 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/magicmethods/</guid>
+      <description>转载自https://rszalski.github.io/magicmethods/ Introduction This guide is the culmination of a few months&amp;rsquo; worth of blog posts. The subject is magic methods. What are magic methods? They&amp;rsquo;re everything in object-oriented</description>
+    </item>
     
     <item>
       <title>Iterables vs Iterator vs Generators</title>
