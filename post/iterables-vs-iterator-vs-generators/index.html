@@ -313,7 +313,7 @@
 </div>
 </div>
 <p>This is what actually happens:
-<img src="iterable-vs-iterator.png" alt="" /></p>
+<img src="/img/python/iterable-vs-iterator.png" alt="" /></p>
 
 <p>When you disassemble this Python code, you can see the explicit call to GET_ITER, which is essentially like invoking iter(x). The FOR_ITER is an instruction that will do the equivalent of calling <code>next()</code> repeatedly to get every element, but this does not show from the byte code instructions because it&rsquo;s optimized for speed in the interpreter.</p>
 <div class="highlight"><div class="chroma">
