@@ -679,7 +679,23 @@
     </footer>
   </article>
         </div>
-        
+        <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        id: '2019-11-30 23:56:25 \x2b0800 CST',
+        title: 'Iterables vs Iterator vs Generators',
+        clientID: '9d09e7ef037a885dea67',
+        clientSecret: '3a28d6dfd7a614f48d1e2a78cf46ec3d62962705',
+        repo: 'blogtalk',
+        owner: 'JustTryItNow',
+        admin: ['JustTryItNow'],
+        body: decodeURI(location.href)
+      });
+      gitalk.render('gitalk-container');
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by gitalk.</a></noscript>
 
   
 
