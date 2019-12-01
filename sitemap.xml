@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://JustTryItNow.github.io/post/magicmethods/</loc>
-    <lastmod>2019-12-01T00:08:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://JustTryItNow.github.io/post/</loc>
     <lastmod>2019-12-01T00:08:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -24,6 +17,13 @@
   
   <url>
     <loc>https://JustTryItNow.github.io/categories/python/</loc>
+    <lastmod>2019-12-01T00:08:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JustTryItNow.github.io/post/magicmethods/</loc>
     <lastmod>2019-12-01T00:08:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
