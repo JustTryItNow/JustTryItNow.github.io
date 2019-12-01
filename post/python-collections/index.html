@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-11-26T20:01:18&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-26T20:01:18&#43;08:00" />
-<meta itemprop="wordCount" content="922">
+<meta itemprop="wordCount" content="1229">
 
 
 
@@ -131,8 +131,8 @@
         <div class="post-category">
             <a href="/categories/python/"> python </a>
             </div>
-          <span class="more-meta"> 922 words </span>
-          <span class="more-meta"> 2 mins read </span>
+          <span class="more-meta"> 1229 words </span>
+          <span class="more-meta"> 3 mins read </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
       </div>
     </header>
@@ -163,14 +163,39 @@
 <p>Counter是dict的子类，用于计数可哈希对象。Counter()接受可迭代对象作为输入，例如列表、元组，并返回Counter类型的字典</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
@@ -180,7 +205,32 @@
 <span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># Counter({&#39;blue&#39;: 3, &#39;green&#39;: 2, &#39;red&#39;: 1})</span>
 
 <span class="c1"># most_common()方法，由高到低返回前n个出现次数最多的元素</span>
-<span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># [(&#39;blue&#39;, 3), (&#39;green&#39;, 2)]</span></code></pre></td></tr></table>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># [(&#39;blue&#39;, 3), (&#39;green&#39;, 2)]</span>
+
+<span class="c1"># elements()方法，忽略value小于等于0的元素，返回该Counter所包含的全部元素组成的迭代器</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">elements</span><span class="p">()))</span>  <span class="c1"># [&#39;red&#39;, &#39;green&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;blue&#39;, &#39;blue&#39;]</span>
+
+<span class="c1"># operator</span>
+<span class="n">counter2</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="s2">&#34;red&#34;</span><span class="p">,</span> <span class="s2">&#34;red&#34;</span><span class="p">,</span> <span class="s2">&#34;blue&#34;</span><span class="p">,</span> <span class="s2">&#34;blue&#34;</span><span class="p">,</span> <span class="s2">&#34;green&#34;</span><span class="p">,</span> <span class="s2">&#34;blue&#34;</span><span class="p">,</span> <span class="s2">&#34;orange&#34;</span><span class="p">])</span>
+<span class="c1">## c + d 返回并集，并且相同元素对应的值会相加</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span> <span class="o">+</span> <span class="n">counter2</span><span class="p">)</span>  <span class="c1"># Counter({&#39;blue&#39;: 6, &#39;red&#39;: 3, &#39;green&#39;: 3, &#39;orange&#39;: 1})</span>
+
+<span class="c1">## c - d 相同元素对应的值会相减，只保留正数的值</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span> <span class="o">-</span> <span class="n">counter2</span><span class="p">)</span>  <span class="c1"># Counter({&#39;red&#39;: 1, &#39;orange&#39;: 1})</span>
+
+<span class="c1">## c &amp; d 取交集，且对应的值为其中的最小值，即min(c[x], d[x])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span> <span class="o">&amp;</span> <span class="n">counter2</span><span class="p">)</span>  <span class="c1"># Counter({&#39;red&#39;: 1, &#39;green&#39;: 1, &#39;blue&#39;: 3})</span>
+
+<span class="c1">## c | d 取并集，且对应的值为其中的最大值，即max(c[x], d[x])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span> <span class="o">|</span> <span class="n">counter2</span><span class="p">)</span>  <span class="c1"># Counter({&#39;red&#39;: 2, &#39;green&#39;: 2, &#39;blue&#39;: 3, &#39;orange&#39;: 1})</span>
+
+<span class="c1"># update 相同元素对应的值相加</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">counter2</span><span class="p">))</span>  <span class="c1"># Counter({&#39;red&#39;: 3, &#39;green&#39;: 3, &#39;blue&#39;: 6, &#39;orange&#39;: 1})</span>
+
+<span class="c1"># subtract 注意与 - 操作符区别</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># Counter({&#39;red&#39;: 3, &#39;green&#39;: 3, &#39;blue&#39;: 6, &#39;orange&#39;: 1})</span>
+<span class="n">counter</span><span class="o">.</span><span class="n">subtract</span><span class="p">([</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># Counter({&#39;red&#39;: 2, &#39;green&#39;: 3, &#39;blue&#39;: 6, &#39;orange&#39;: 0, &#39;gray&#39;: -1})</span></code></pre></td></tr></table>
 </div>
 </div>
 <h2 id="2-ordereddict">2 OrderedDict</h2>
