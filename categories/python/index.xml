@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python on Zhou Zaida</title>
+    <title>python on Zhou Zaida</title>
     <link>https://JustTryItNow.github.io/categories/python/</link>
-    <description>Recent content in Python on Zhou Zaida</description>
+    <description>Recent content in python on Zhou Zaida</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Dec 2019 00:08:27 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 14 Dec 2019 16:05:31 +0800</lastBuildDate>
     
 	<atom:link href="https://JustTryItNow.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python heapq--堆队列算法</title>
+      <link>https://JustTryItNow.github.io/post/python-heapq/</link>
+      <pubDate>Sat, 14 Dec 2019 16:05:31 +0800</pubDate>
+      
+      <guid>https://JustTryItNow.github.io/post/python-heapq/</guid>
+      <description>堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值</description>
+    </item>
     
     <item>
       <title>Python magicmethods</title>

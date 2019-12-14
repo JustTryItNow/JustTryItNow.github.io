@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Python heapq--堆队列算法 - Zhou Zaida</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="zhouzaida" /><meta name="description" content="堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
+
+
+<link rel="canonical" href="https://JustTryItNow.github.io/post/python-heapq/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.ae7674a0.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Python heapq--堆队列算法" />
+<meta property="og:description" content="堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JustTryItNow.github.io/post/python-heapq/" />
+<meta property="article:published_time" content="2019-12-14T16:05:31+08:00" />
+<meta property="article:modified_time" content="2019-12-14T16:05:31+08:00" />
+<meta itemprop="name" content="Python heapq--堆队列算法">
+<meta itemprop="description" content="堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值">
+
+
+<meta itemprop="datePublished" content="2019-12-14T16:05:31&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-14T16:05:31&#43;08:00" />
+<meta itemprop="wordCount" content="859">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Python heapq--堆队列算法"/>
+<meta name="twitter:description" content="堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Zhou Zaida</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Zhou Zaida</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Python heapq--堆队列算法</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-12-14 </span>
+        <div class="post-category">
+            <a href="/categories/python/"> python </a>
+            </div>
+          <span class="more-meta"> 859 words </span>
+          <span class="more-meta"> 2 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#heapq-最小堆">heapq&ndash;最小堆</a>
+<ul>
+<li><a href="#heapify-x">heapify(x)</a></li>
+<li><a href="#heappush-heap-item">heappush(heap, item)</a></li>
+<li><a href="#heappop-heap">heappop(heap)</a></li>
+<li><a href="#heappushpop-heap-item">heappushpop(heap, item)</a></li>
+<li><a href="#heapreplace-heap-item">heapreplace(heap, item)</a></li>
+<li><a href="#nlargest-n-iterable-key-none">nlargest(n, iterable, key=None)</a></li>
+<li><a href="#nsmallest-n-iterable-key-none">nsmallest(n, iterable, key=None)</a></li>
+<li><a href="#heapq-merge-iterables-key-none-reverse-false">heapq.merge(*iterables, key=None, reverse=False)</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p>堆是一种特殊的二叉树结构，根据根节点与左右节点的值分最小堆和最大堆。最小堆中每个根节点的值总小于或者等于左右节点的值，最大堆中每个根节点的值总大于或者等于左右节点的值。<code>heapq</code>是最小堆。</p>
+
+<h2 id="heapq-最小堆">heapq&ndash;最小堆</h2>
+
+<h3 id="heapify-x">heapify(x)</h3>
+
+<p>创建堆队列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<span class="c1"># 访问最小元素，不会弹出</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;最小元素: &#34;</span><span class="p">,</span> <span class="n">heap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 最小元素: 1</span>
+<span class="k">while</span> <span class="n">heap</span><span class="p">:</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>  <span class="c1"># heappop()弹出最小元素</span>
+    <span class="c1"># 1</span>
+    <span class="c1"># 2</span>
+    <span class="c1"># 3</span>
+    <span class="c1"># 4</span>
+    <span class="c1"># 5</span>
+
+<span class="c1"># 也可以通过压入元素的方式创建堆队列</span>
+<span class="n">heap1</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap1</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="c1"># 访问最小元素，不会弹出</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;最小元素: &#34;</span><span class="p">,</span> <span class="n">heap1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 最小元素: 1</span>
+<span class="k">while</span> <span class="n">heap1</span><span class="p">:</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap1</span><span class="p">)</span>  <span class="c1"># heappop()弹出最小元素</span>
+    <span class="c1"># 1</span>
+    <span class="c1"># 2</span>
+    <span class="c1"># 3</span>
+    <span class="c1"># 4</span>
+    <span class="c1"># 5</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="heappush-heap-item">heappush(heap, item)</h3>
+
+<p>将<code>item</code>的值加入<code>heap</code>中，保持堆的不变性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1成为最小元素</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;最小元素: &#34;</span><span class="p">,</span> <span class="n">heap</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 最小元素: 1</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="heappop-heap">heappop(heap)</h3>
+
+<p>弹出并返回<code>heap</code>的最小的元素，保持堆的不变性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">))</span>  <span class="c1"># 弹出2</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="heappushpop-heap-item">heappushpop(heap, item)</h3>
+
+<p>将<code>item</code>放入堆中，然后弹出并返回<code>heap</code>的最小元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">heappushpop</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>  <span class="c1"># 弹出2</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="heapreplace-heap-item">heapreplace(heap, item)</h3>
+
+<p>弹出并返回<code>heap</code>中最小的一项，同时推入新的<code>item</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="n">heap</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">heapreplace</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># 弹出2并压入1</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="nlargest-n-iterable-key-none">nlargest(n, iterable, key=None)</h3>
+
+<p>从<code>iterable</code>所定义的数据中返回前<code>n</code>个最大的元素组成的列表，如果提供了<code>key</code>则其应指定一个单参数的函数，用于从<code>iterable</code>的每个元素中提取比较键。<code>n</code>较大时，使用<code>sorted()</code>更好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>  <span class="c1"># [7, 5]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;hello&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;hi&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">},</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&#34;age&#34;</span><span class="p">]))</span>
+<span class="c1"># [{&#39;name&#39;: &#39;hi&#39;, &#39;age&#39;: 15}, {&#39;name&#39;: &#39;hello&#39;, &#39;age&#39;: 10}]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="nsmallest-n-iterable-key-none">nsmallest(n, iterable, key=None)</h3>
+
+<p>从<code>iterable</code>所定义的数据中返回前<code>n</code>个最小的元素组成的列表，如果提供了<code>key</code>则其应指定一个单参数的函数，用于从<code>iterable</code>的每个元素中提取比较键。<code>n</code>较大时，使用<code>sorted()</code>更好</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>  <span class="c1"># [1, 2]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;hello&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;hi&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">},</span> <span class="p">{</span><span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;age&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="s2">&#34;age&#34;</span><span class="p">]))</span>
+<span class="c1"># [{&#34;name&#34;: &#34;h&#34;, &#34;age&#34;: 5}, {&#39;name&#39;: &#39;hello&#39;, &#39;age&#39;: 10}]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="heapq-merge-iterables-key-none-reverse-false">heapq.merge(*iterables, key=None, reverse=False)</h3>
+
+<p>将多个已排序的输入合并为一个已排序的生成器对象</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">import</span> <span class="nn">heapq</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">heapq</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">])))</span>  <span class="c1"># 1</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://docs.python.org/zh-cn/3.7/library/heapq.html">https://docs.python.org/zh-cn/3.7/library/heapq.html</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">zhouzaida</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2019-12-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/magicmethods/">
+            <span class="next-text nav-default">Python magicmethods</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        id: '2019-12-14 16:05:31 \x2b0800 CST',
+        title: 'Python heapq--堆队列算法',
+        clientID: '9d09e7ef037a885dea67',
+        clientSecret: '3a28d6dfd7a614f48d1e2a78cf46ec3d62962705',
+        repo: 'blogtalk',
+        owner: 'JustTryItNow',
+        admin: ['JustTryItNow'],
+        body: decodeURI(location.href)
+      });
+      gitalk.render('gitalk-container');
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by gitalk.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:justrunordoit@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/JustTryItNow" class="iconfont icon-github" title="github"></a>
+  <a href="https://JustTryItNow.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">zhouzaida</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
